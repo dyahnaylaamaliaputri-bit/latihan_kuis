@@ -1,15 +1,23 @@
+// Library utama Flutter untuk membuat tampilan
 import 'package:flutter/material.dart';
+
+// Dipakai untuk kembali ke halaman login saat logout
 import '../login.dart';
 
 // StatelessWidget karena tidak ada data yang berubah (Modul 3)
 class ProfilePage extends StatelessWidget {
+  // Nama user yang dikirim dari halaman login lewat Root
   final String nama;
 
+  // required = nama wajib diisi saat halaman ini dibuat
   const ProfilePage({super.key, required this.nama});
 
+  // build: fungsi yang menggambar tampilan halaman
   @override
   Widget build(BuildContext context) {
+    // Scaffold: kerangka dasar halaman
     return Scaffold(
+      // Warna latar halaman: krem muda
       backgroundColor: const Color(0xFFFAF7F4),
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF9800),
@@ -27,8 +35,10 @@ class ProfilePage extends StatelessWidget {
       // Scroll
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(6.0),
+        // Column: menyusun widget dari atas ke bawah
         child: Column(
           children: [
+            // SizedBox: memberi jarak kosong setinggi 10
             const SizedBox(height: 10),
 
             // Foto profil (icon)
@@ -36,6 +46,7 @@ class ProfilePage extends StatelessWidget {
               width: 98,
               height: 98,
               decoration: const BoxDecoration(
+                // Bentuk lingkaran
                 shape: BoxShape.circle,
                 color: Color(0xFFFFE0B2),
               ),
@@ -50,6 +61,7 @@ class ProfilePage extends StatelessWidget {
 
             // Nama pelanggan
             Text(
+              // Menampilkan nama user yang dikirim dari halaman login
               nama,
               style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
             ),
@@ -80,10 +92,14 @@ class ProfilePage extends StatelessWidget {
             ),
 
             const SizedBox(height: 18),
+            // Tombol Logout
             ElevatedButton(
               onPressed: () {
+                // Pindah ke halaman login sekaligus menghapus halaman-halaman sebelumnya,
+                // supaya user tidak bisa kembali ke halaman utama dengan tombol back
                 Navigator.pushAndRemoveUntil(
                   context,
+                  // Halaman tujuan: LoginPage
                   MaterialPageRoute(builder: (context) => const LoginPage()),
                   (route) => false, // hapus semua route sebelumnya
                 );
@@ -92,12 +108,14 @@ class ProfilePage extends StatelessWidget {
             ),
           ],
         ),
-      
       ),
     );
   }
 
+  // Fungsi pembantu untuk membuat kartu menu.
+  // Dipakai berulang supaya kode tidak perlu ditulis dua kali
   Widget _menuCard({
+    // Data yang dibutuhkan kartu: ikon, judul, dan keterangan
     required IconData icon,
     required String title,
     required String subtitle,
@@ -107,6 +125,7 @@ class ProfilePage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 15),
       decoration: BoxDecoration(
         color: Colors.white,
+        // Sudut kartu membulat
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -116,6 +135,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ],
       ),
+      // Row: menyusun widget ke samping. Ikon di kiri, teks di kanan
       child: Row(
         children: [
           // Icon dalam lingkaran
@@ -131,6 +151,7 @@ class ProfilePage extends StatelessWidget {
 
           const SizedBox(width: 12),
 
+          // Expanded: teks memakai sisa lebar yang ada, supaya tidak meluber keluar layar
           // Judul dan deskripsi
           Expanded(
             child: Column(

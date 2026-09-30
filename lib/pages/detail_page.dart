@@ -1,5 +1,7 @@
+// Library utama Flutter untuk membuat tampilan
 import 'package:flutter/material.dart';
 
+// Model data makanan
 import '../models/food_item.dart';
 
 // StatefulWidget karena _quantity bisa berubah
@@ -10,26 +12,33 @@ class DetailPage extends StatefulWidget {
 
   const DetailPage({super.key, required this.item, required this.index});
 
+  // Membuat State untuk menyimpan jumlah porsi di halaman ini
   @override
   State<DetailPage> createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
+  // late: nilainya diisi nanti (di initState), bukan saat dideklarasikan
   // STATE: quantity lokal di halaman ini
   late int _quantity;
 
+  // initState: dijalankan satu kali saat halaman pertama kali dibuka
   @override
   void initState() {
+    // Wajib dipanggil supaya proses awal bawaan Flutter tetap berjalan
     super.initState();
     // Ambil quantity awal dari item yang dikirim halaman beranda
     _quantity = widget.item.quantity;
   }
 
+  // widget.item: cara mengambil data item yang dikirim ke halaman ini
   // Hitung total harga berdasarkan quantity lokal
   int get _totalPrice => _quantity * widget.item.price;
 
+  // build: fungsi yang menggambar tampilan halaman
   @override
   Widget build(BuildContext context) {
+    // Scaffold: kerangka dasar halaman
     return Scaffold(
       backgroundColor: const Color(0xFFFAF7F4),
       appBar: AppBar(
@@ -45,18 +54,22 @@ class _DetailPageState extends State<DetailPage> {
         // Tombol back — kirim quantity kembali ke HomePage
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
+          // pop: menutup halaman ini dan kembali ke halaman sebelumnya,
+          // sambil membawa nilai _quantity
           onPressed: () => Navigator.pop(context, _quantity),
         ),
         centerTitle: true,
         elevation: 0,
       ),
 
+      // Isi halaman bisa di-scroll supaya tidak terpotong di layar kecil
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Gambar makanan
             Padding(
+              // fromLTRB = jarak dari Kiri, Atas, Kanan, Bawah
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(14),
@@ -65,6 +78,7 @@ class _DetailPageState extends State<DetailPage> {
                   width: double.infinity,
                   height: 170,
                   fit: BoxFit.cover,
+                  // Tampilan cadangan kalau gambar gagal dimuat
                   errorBuilder: (_, __, ___) => Container(
                     width: double.infinity,
                     height: 170,
@@ -93,6 +107,7 @@ class _DetailPageState extends State<DetailPage> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
+                          // Warna bayangan: hitam dengan transparansi tinggi (hanya 6%)
                           color: Colors.black.withOpacity(0.06),
                           blurRadius: 6,
                           offset: const Offset(0, 2),
@@ -141,6 +156,7 @@ class _DetailPageState extends State<DetailPage> {
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           decoration: BoxDecoration(
                             color: Colors.white,
+                            // Garis tepi kotak kontrol jumlah
                             border: Border.all(
                               color: const Color(0xFF9A7445),
                               width: 1.2,
@@ -165,12 +181,16 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
 
+                              // Spacer: mendorong widget setelahnya ke ujung kanan
                               const Spacer(),
 
                               // Tombol kurang (-)
                               GestureDetector(
+                                // Tombol kurang hanya aktif kalau jumlah lebih dari 0, jadi jumlah tidak bisa minus.
+                                // null artinya tombol tidak bisa ditekan
                                 onTap: _quantity > 0
                                     ? () {
+                                        // setState: memperbarui tampilan supaya angka yang baru langsung terlihat
                                         setState(() {
                                           _quantity--;
                                         });
@@ -228,12 +248,14 @@ class _DetailPageState extends State<DetailPage> {
                             ),
 
                             Text(
+                              // Kalau sudah ada pesanan tampilkan total harga, kalau belum tampilkan Rp 0
                               _quantity > 0
                                   ? 'Rp ${formatPrice(_totalPrice)}'
                                   : 'Rp 0',
                               style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
+                                // Warna hijau kalau ada pesanan, abu-abu kalau belum ada
                                 color: _quantity > 0
                                     ? const Color(0xFF5FA86B)
                                     : Colors.grey,
@@ -263,10 +285,13 @@ class _DetailPageState extends State<DetailPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
+                      // Gaya tombol
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFFF9800),
+                        // Warna tulisan dan ikon tombol: putih
                         foregroundColor: Colors.white,
                         elevation: 0,
+                        // Bentuk tombol dengan sudut membulat
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(9),
                         ),
