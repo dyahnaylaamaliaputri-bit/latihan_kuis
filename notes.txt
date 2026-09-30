@@ -1,0 +1,90 @@
+PUSH REPOSITORY
+
+echo "# 124240094_Dyah-Nayla-Amalia-Putri_Latihan_Kuis_Mobile_SI_E" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/dyahnaylaamaliaputri-bit/124240094_Dyah-Nayla-Amalia-Putri_Latihan_Kuis_Mobile_SI_E.git
+git push -u origin main
+
+git remote add origin https://github.com/dyahnaylaamaliaputri-bit/124240094_Dyah-Nayla-Amalia-Putri_Latihan_Kuis_Mobile_SI_E.git
+git branch -M main
+git push -u origin main
+
+
+YANG MENURUT AI
+
+git init
+git remote add origin "https://github.com/dyahnaylaamaliaputri-bit/124240094_Dyah-Nayla-Amalia-Putri_Latihan_Kuis_Mobile_SI_E.git"
+git remote -v
+git add .
+git status
+git branch -M main
+git commit -m "Initial commit"
+git push -u origin main
+
+MEMBUAT FOLDER FLUTTER LEWAT CMD
+flutter create nama_projek -e
+code .
+
+
+KALO MISAL BARU DOWNLOAD FOLDER GITHUB JANGAN LUPA UNTUK 
+flutter clean
+flutter pub get
+
+MENAMBAHKAN FITUR LOGIN
+
+BUAT DATANYA DULU
+KEMUDIAN BUAT HALAMAN LOGIN
+KEMUDIAN KE ROOT INISIASI:
+
+class Root extends StatefulWidget{
+    //tambahan buat menu login
+    final String nama;
+
+    const Root({super.key, required this.nama});
+    @override
+    State<Root> createState()=> _RootState();
+}
+
+KEMUDIAN IMPORT LOGIN DI MAIN DAN DI ROOT
+
+PANGGIL LOGIN DI MAIN
+
+MENAMBAHAKAN LOGOUT UNTUK PUSHANDREOVEANTIL
+tambahin kode ini di profil dan tambahkan impor login di profil
+
+ElevatedButton(
+  onPressed: () {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+      (route) => false, // hapus semua route sebelumnya
+    );
+  },
+  child: const Text('Logout'),
+),
+
+
+MENERUSKAN USERNAME KE PROFILE
+ROOT:
+final List<Widget> pages = [
+    HomePage(),
+    ProfilePage(nama: widget.nama), // <- teruskan nama dari login
+];
+
+PROFILE:
+class ProfilePage extends StatelessWidget {
+  final String nama; // <- data dari login
+
+  const ProfilePage({super.key, required this.nama});
+
+  // hapus baris: static const String namaPelanggan = '...';
+
+DIBAGIAN PELANGGAN UBAH NAMA PELANGGAN MENJADI
+// Nama pelanggan
+Text(
+  nama,
+  style: const TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
+),
